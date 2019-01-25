@@ -6,48 +6,48 @@ using System.Threading.Tasks;
 
 namespace FileCategorizingProject
 {
-        public class CategoryCriteria
+    public class CategoryCriteria
     {
-        public bool AFollowedByB(string FileName)
+        public bool AFollowedByB( string fileName)
         {
-            return FollowedBy(FileName, 'a', 'b');
+            return FollowedBy(fileName, 'a', 'b');
         }
 
-        public bool BFollowedByA(string FileName)
+        public bool BFollowedByA(string fileName)
         {
-            return FollowedBy(FileName, 'b', 'a');
+            return FollowedBy(fileName, 'b', 'a');
         }
 
-        public bool GFollowedByB(string FileName)
+        public bool GFollowedByB(string fileName)
         {
-            return FollowedBy(FileName, 'g', 'b');
+            return FollowedBy(fileName, 'g', 'b');
         }
 
-        public bool ContainsC(string FileName)
+        public bool ContainsC(string fileName)
         {
-            return Contains(FileName, 'c');
+            return Contains(fileName, 'c');
         }
 
-        public bool ContainsG(string FileName)
+        public bool ContainsG(string fileName)
         {
-            return Contains(FileName, 'g');
+            return Contains(fileName, 'g');
         }
 
-        public bool ContainsZ(string FileName)
+        public bool ContainsZ(string fileName)
         {
-            return Contains(FileName, 'z');
+            return Contains(fileName, 'z');
         }
 
-        public bool Contains(string FileName, char first)
+        public bool Contains(string fileName, char first)
         {
-            return FileName.Contains(first);
+            return fileName.Contains(first);
         }
 
-        public bool FollowedBy(string FileName, char first, char second)
+        public bool FollowedBy(string fileName, char first, char second)
         {
-            if (FileName.Contains(first))
+            if (fileName.Contains(first))
             {
-                return FileName.Substring(FileName.IndexOf(first)).Contains(second);
+                return fileName.Substring(fileName.IndexOf(first)).Contains(second);
             }
             return false;
         }

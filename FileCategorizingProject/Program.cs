@@ -20,7 +20,7 @@ namespace FileCategorizingProject
             
             foreach (string fileName in fileNames)
             {
-                files.Add(getFileNameInfo(fileName));
+                files.Add(new FileFactory(fileName).getFileType());
             }
 
             foreach (FileType p in files)
@@ -38,37 +38,6 @@ namespace FileCategorizingProject
                 Console.Write("\n");
             }
             Console.ReadLine();
-        }
-
-        static FileType getFileNameInfo(string file)
-        {
-            string fileExtension = FindExt(file);
-            string fileName = FindFileName(file);
-            if (fileExtension == ".exe" || fileExtension == ".txt")
-            {
-                return new ExeFile(fileName, fileExtension);
-            }
-            else if (fileExtension == ".pdf" || fileExtension == ".bmp")
-            {
-                return new PdfFile(fileName, fileExtension);
-            }
-            else if (fileExtension == ".docx")
-            {
-                return new DocFile(fileName, fileExtension);
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        static string FindExt(string file)
-        {
-            return file.Substring(file.IndexOf('.'));
-        }
-        static string FindFileName(string file)
-        {
-            return file.Substring(0, file.IndexOf('.'));
         }
     }
 }

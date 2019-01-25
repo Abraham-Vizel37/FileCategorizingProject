@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Categories.cs" />
+    <Compile Include="FileFactory.cs" />
     <Compile Include="FileType.cs" />
     <Compile Include="ICategorize.cs" />
     <Compile Include="Program.cs" />

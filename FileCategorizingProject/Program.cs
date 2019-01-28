@@ -20,7 +20,7 @@ namespace FileCategorizingProject
             
             foreach (string fileName in fileNames)
             {
-                files.Add(new FileFactory(fileName).getFileType());
+                files.Add(new FileTypeFactory(fileName).getFileType());
             }
 
             foreach (FileType p in files)

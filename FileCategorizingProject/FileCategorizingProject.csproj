@@ -42,8 +42,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Categories.cs" />
-    <Compile Include="FileFactory.cs" />
+    <Compile Include="FileCategories.cs" />
+    <Compile Include="FileTypeCategorizer.cs" />
+    <Compile Include="FileTypeFactory.cs" />
     <Compile Include="FileType.cs" />
     <Compile Include="ICategorize.cs" />
     <Compile Include="Program.cs" />

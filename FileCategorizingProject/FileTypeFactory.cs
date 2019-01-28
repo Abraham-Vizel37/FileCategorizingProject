@@ -6,16 +6,15 @@ using System.Threading.Tasks;
 
 namespace FileCategorizingProject
 {
-    class FileFactory
+    class FileTypeFactory
     {
         private string _Name;
         private string _Extension;
 
-        public FileFactory(string name)
+        public FileTypeFactory(string name)
         {
             _Name = FindFileName(name);
             _Extension = FindExtention(name);
-
         }
 
         public FileType getFileType()
@@ -24,18 +23,17 @@ namespace FileCategorizingProject
             {
                 case ".exe":
                 case ".txt":
-                    return new ExeFile(_Name, _Extension);
+                    return new ExeFileType(_Name, _Extension);
 
                 case ".pdf":
                 case ".bmp":
-                    return new PdfFile(_Name, _Extension);
+                    return new PdfFileType(_Name, _Extension);
 
                 case ".docx":
-                    return new DocFile(_Name, _Extension);
+                    return new DocFileType(_Name, _Extension);
                 default:
                     return null;
             }
-
         }
 
         private string FindExtention(string fileName)

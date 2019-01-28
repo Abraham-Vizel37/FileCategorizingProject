@@ -6,54 +6,34 @@ using System.Threading.Tasks;
 
 namespace FileCategorizingProject
 {
-    public class CategoryCriteria
+
+    public abstract class CoreCategoryLogic
     {
-        public bool AFollowedByB( string fileName)
-        {
-            return FollowedBy(fileName, 'a', 'b');
-        }
-
-        public bool BFollowedByA(string fileName)
-        {
-            return FollowedBy(fileName, 'b', 'a');
-        }
-
-        public bool GFollowedByB(string fileName)
-        {
-            return FollowedBy(fileName, 'g', 'b');
-        }
-
-        public bool ContainsC(string fileName)
-        {
-            return Contains(fileName, 'c');
-        }
-
-        public bool ContainsG(string fileName)
-        {
-            return Contains(fileName, 'g');
-        }
-
-        public bool ContainsZ(string fileName)
-        {
-            return Contains(fileName, 'z');
-        }
-
-        public bool Contains(string fileName, char first)
-        {
-            return fileName.Contains(first);
-        }
-
-        public bool FollowedBy(string fileName, char first, char second)
-        {
-            if (fileName.Contains(first))
-            {
-                return fileName.Substring(fileName.IndexOf(first)).Contains(second);
-            }
-            return false;
-        }
+        public bool ContainsZ(string fileName) => Contains(fileName, 'z');
+        public bool Contains(string fileName, char first) => fileName.Contains(first);
+        public bool FollowedBy(string fileName, char first, char second) => fileName.Contains(first) ? fileName.Substring(fileName.IndexOf(first)).Contains(second) : false;
+    }
+    public abstract class ExeCategoryLogic : CoreCategoryLogic
+    {
+        public bool AFollowedByB(string fileName) => FollowedBy(fileName, 'a', 'b');
+        public bool ContainsC(string fileName) => Contains(fileName, 'c');
+        public bool ContainsG(string fileName) => Contains(fileName, 'g');
+    }
+    public abstract class PdfCategoryLogic : CoreCategoryLogic
+    {
+        public bool AFollowedByB(string fileName) => FollowedBy(fileName, 'a', 'b');
+        public bool BFollowedByA(string fileName) => FollowedBy(fileName, 'b', 'a');
+        public bool ContainsC(string fileName) => Contains(fileName, 'c');
+    }
+    public abstract class DocCategoryLogic : CoreCategoryLogic
+    {
+        public bool BFollowedByA(string fileName) => FollowedBy(fileName, 'b', 'a');
+        public bool GFollowedByB(string fileName) => FollowedBy(fileName, 'g', 'b');
+        public bool ContainsG(string fileName) => Contains(fileName, 'g');
     }
 
-    public class ExeCategories : CategoryCriteria, ICategorize
+
+    public class ExeFileTypeCategorizer : ExeCategoryLogic, ICategorize
     {
         public void Categorize(string fileName, List<string> categories, List<string> subCategories)
         {
@@ -79,7 +59,7 @@ namespace FileCategorizingProject
             }
         }
     }
-    public class PdfCategories : CategoryCriteria, ICategorize
+    public class PdfFileTypeCategorizer : PdfCategoryLogic, ICategorize
     {
         public void Categorize(string fileName, List<string> categories, List<string> subCategories)
         {
@@ -100,7 +80,7 @@ namespace FileCategorizingProject
                     subCategories.Add("z");
         }
     }
-    public class DocCategories : CategoryCriteria, ICategorize
+    public class DocFileTypeCategorizer : DocCategoryLogic, ICategorize
     {
         public void Categorize(string fileName, List<string> categories, List<string> subCategories)
         {

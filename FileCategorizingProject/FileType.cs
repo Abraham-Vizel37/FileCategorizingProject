@@ -6,20 +6,20 @@ using System.Threading.Tasks;
 
 namespace FileCategorizingProject
 {
-
-
     public class FileType
     {
         protected string Name;
         protected string Extension;
+
         protected List<string> Categories = new List<string> { };
         protected List<string> SubCategories = new List<string> { };
-        private ICategorize _CategorizeType;
+
+        private ICategorize _CategorizerType;
 
         public FileType(string name, string extension)
         {
             Name = name;
-            Extension = extension;
+            Extension = extension;            
         }
 
         public string getName()
@@ -30,6 +30,7 @@ namespace FileCategorizingProject
         {
             return Extension;
         }
+
         public List<string> getCategories()
         {
             return Categories;
@@ -39,53 +40,51 @@ namespace FileCategorizingProject
             return SubCategories;
         }
 
-
-        protected void setCategorizeType(ICategorize CategorizeType)
+        protected void setCategorizerType(ICategorize CategorizerType)
         {
-            _CategorizeType = CategorizeType;
+            _CategorizerType = CategorizerType;
         }
         protected void Categorize()
         {
-            if (!_CategorizeType.Equals(null))
+            if (!_CategorizerType.Equals(null))
             {
-                _CategorizeType.Categorize(Name, Categories, SubCategories);
+                _CategorizerType.Categorize(Name, Categories, SubCategories);
             }
             else
             {
                 Console.WriteLine("\nThere is no fileType assigned to Categorize.");
             }
         }
-
     }
 
-    public class ExeFile : FileType
+    public class ExeFileType : FileType
     {
-        public ExeFile(string name, string extension) : base(name, extension)
+        public ExeFileType(string name, string extension) : base(name, extension)
         {
             Name = name;
             Extension = extension;
-            setCategorizeType(new ExeCategories());
+            setCategorizerType(new ExeFileTypeCategorizer());
             Categorize();
         }
     }
-    public class PdfFile : FileType
+    public class PdfFileType : FileType
     {
-        public PdfFile(string name, string extension) : base(name, extension)
+        public PdfFileType(string name, string extension) : base(name, extension)
         {
             Name = name;
             Extension = extension;
-            setCategorizeType(new PdfCategories());
+            setCategorizerType(new PdfFileTypeCategorizer());
             Categorize();
 
         }
     }
-    public class DocFile : FileType
+    public class DocFileType : FileType
     {
-        public DocFile(string name, string extension) : base(name, extension)
+        public DocFileType(string name, string extension) : base(name, extension)
         {
             Name = name;
             Extension = extension;
-            setCategorizeType(new DocCategories());
+            setCategorizerType(new DocFileTypeCategorizer());
             Categorize();
 
         }

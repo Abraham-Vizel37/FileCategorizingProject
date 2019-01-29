@@ -38,12 +38,12 @@ namespace FileCategorizingProject
 
         private string FindExtention(string fileName)
         {
-            return fileName.Substring(fileName.IndexOf('.'));
+            return fileName.Substring(fileName.LastIndexOf('.'));
         }
 
         private string FindFileName(string fileName)
         {
-            return fileName.Substring(0, fileName.IndexOf('.'));
+            return fileName.Substring(0, fileName.LastIndexOf('.'));
         }
     }
 }

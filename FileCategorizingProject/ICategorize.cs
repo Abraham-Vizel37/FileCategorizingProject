@@ -6,9 +6,14 @@ using System.Threading.Tasks;
 
 namespace FileCategorizingProject
 {
-    public interface ICategorize
+    public interface ICategorizeFile
     {
-        void Categorize(string fileName, List<string> categories, List<string> subCategories);
+        void Categorize(FileType file);
+    }
+
+    public interface ICategorizeLogicChain
+    {
+        List<string> ComputeLogic(string fileName);
     }
 
 }

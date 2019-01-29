@@ -6,104 +6,108 @@ using System.Threading.Tasks;
 
 namespace FileCategorizingProject
 {
+    public class FileTypeCategorizer
+    {
+        private ICategorizeFile _Categorizer;
 
-    public abstract class CoreCategoryLogic
-    {
-        public bool ContainsZ(string fileName) => Contains(fileName, 'z');
-        public bool Contains(string fileName, char first) => fileName.Contains(first);
-        public bool FollowedBy(string fileName, char first, char second) => fileName.Contains(first) ? fileName.Substring(fileName.IndexOf(first)).Contains(second) : false;
-    }
-    public abstract class ExeCategoryLogic : CoreCategoryLogic
-    {
-        public bool AFollowedByB(string fileName) => FollowedBy(fileName, 'a', 'b');
-        public bool ContainsC(string fileName) => Contains(fileName, 'c');
-        public bool ContainsG(string fileName) => Contains(fileName, 'g');
-    }
-    public abstract class PdfCategoryLogic : CoreCategoryLogic
-    {
-        public bool AFollowedByB(string fileName) => FollowedBy(fileName, 'a', 'b');
-        public bool BFollowedByA(string fileName) => FollowedBy(fileName, 'b', 'a');
-        public bool ContainsC(string fileName) => Contains(fileName, 'c');
-    }
-    public abstract class DocCategoryLogic : CoreCategoryLogic
-    {
-        public bool BFollowedByA(string fileName) => FollowedBy(fileName, 'b', 'a');
-        public bool GFollowedByB(string fileName) => FollowedBy(fileName, 'g', 'b');
-        public bool ContainsG(string fileName) => Contains(fileName, 'g');
-    }
-
-
-    public class ExeFileTypeCategorizer : ExeCategoryLogic, ICategorize
-    {
-        public void Categorize(string fileName, List<string> categories, List<string> subCategories)
+        public FileTypeCategorizer(ICategorizeFile categorizer)
         {
-            if (AFollowedByB(fileName))
+            _Categorizer = categorizer;
+        }
+
+        public void Categorize(FileType file)
+        {
+            if (!_Categorizer.Equals(null) || !file.Equals(null))
+            {
+                _Categorizer.Categorize(file);
+            }
+            else
+            {
+                Console.WriteLine("\nThere is no fileType assigned to the Categorizer.");
+            }
+            
+        }
+    }
+
+    public class ExeFileTypeCategorizer : ExeCategoryLogic, ICategorizeFile
+    {
+        public void Categorize(FileType file)
+        {
+            if (AFollowedByB(file.getName()))
             {
                 categories.Add("ab");
-                if (ContainsC(fileName))
+                if (ContainsC(file.getName()))
                 {
                     subCategories.Add("c");
                 }
             }
-            if (ContainsG(fileName))
+            if (ContainsG(file.getName()))
             {
                 categories.Add("g");
-                if (AFollowedByB(fileName))
+                if (AFollowedByB(file.getName()))
                 {
                     subCategories.Add("ba");
                 }
-                if (ContainsZ(fileName))
+                if (ContainsZ(file.getName()))
                 {
                     subCategories.Add("z");
                 }
             }
+            file.setCategories(categories);
+            file.setSubCategories(subCategories);
+
         }
     }
-    public class PdfFileTypeCategorizer : PdfCategoryLogic, ICategorize
+    public class PdfFileTypeCategorizer : PdfCategoryLogic, ICategorizeFile
     {
-        public void Categorize(string fileName, List<string> categories, List<string> subCategories)
+        public void Categorize(FileType file)
         {
-            if (BFollowedByA(fileName))
+            if (BFollowedByA(file.getName()))
             {
                 categories.Add("ab");
             }
-            if (ContainsC(fileName))
+            if (ContainsC(file.getName()))
             {
                 categories.Add("c");
-                if (AFollowedByB(fileName))
+                if (AFollowedByB(file.getName()))
                 {
                     subCategories.Add("ba");
                 }
             }
-            if (BFollowedByA(fileName) || ContainsC(fileName))
-                if (ContainsZ(fileName))
+            if (BFollowedByA(file.getName()) || ContainsC(file.getName()))
+                if (ContainsZ(file.getName()))
                     subCategories.Add("z");
+
+            file.setCategories(categories);
+            file.setSubCategories(subCategories);
         }
     }
-    public class DocFileTypeCategorizer : DocCategoryLogic, ICategorize
+    public class DocFileTypeCategorizer : DocCategoryLogic, ICategorizeFile
     {
-        public void Categorize(string fileName, List<string> categories, List<string> subCategories)
+        public void Categorize(FileType file)
         {
-            if (BFollowedByA(fileName))
+            if (BFollowedByA(file.getName()))
             {
                 categories.Add("cb");
-                if (ContainsG(fileName))
+                if (ContainsG(file.getName()))
                 {
                     subCategories.Add("g");
                 }
             }
-            if (ContainsG(fileName))
+            if (ContainsG(file.getName()))
             {
                 categories.Add("g");
-                if (GFollowedByB(fileName))
+                if (GFollowedByB(file.getName()))
                 {
                     subCategories.Add("gb");
                 }
-                if (ContainsZ(fileName))
+                if (ContainsZ(file.getName()))
                 {
                     subCategories.Add("c");
                 }
             }
+            file.setCategories(categories);
+            file.setSubCategories(subCategories);
         }
     }
 }

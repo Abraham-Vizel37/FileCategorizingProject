@@ -10,11 +10,9 @@ namespace FileCategorizingProject
     {
         protected string Name;
         protected string Extension;
-
         protected List<string> Categories = new List<string> { };
         protected List<string> SubCategories = new List<string> { };
-
-        private ICategorize _CategorizerType;
+        protected FileTypeCategorizer _FileTypeCategorizer;
 
         public FileType(string name, string extension)
         {
@@ -30,7 +28,6 @@ namespace FileCategorizingProject
         {
             return Extension;
         }
-
         public List<string> getCategories()
         {
             return Categories;
@@ -39,21 +36,13 @@ namespace FileCategorizingProject
         {
             return SubCategories;
         }
-
-        protected void setCategorizerType(ICategorize CategorizerType)
+        public void setCategories(List<string> categories)
         {
-            _CategorizerType = CategorizerType;
+            Categories = categories;
         }
-        protected void Categorize()
+        public void setSubCategories(List<string> subCategories)
         {
-            if (!_CategorizerType.Equals(null))
-            {
-                _CategorizerType.Categorize(Name, Categories, SubCategories);
-            }
-            else
-            {
-                Console.WriteLine("\nThere is no fileType assigned to Categorize.");
-            }
+            SubCategories = subCategories;
         }
     }
 
@@ -63,8 +52,9 @@ namespace FileCategorizingProject
         {
             Name = name;
             Extension = extension;
-            setCategorizerType(new ExeFileTypeCategorizer());
-            Categorize();
+            _FileTypeCategorizer = new FileTypeCategorizer(new ExeFileTypeCategorizer());
+            _FileTypeCategorizer.Categorize(this);
+
         }
     }
     public class PdfFileType : FileType
@@ -73,9 +63,8 @@ namespace FileCategorizingProject
         {
             Name = name;
             Extension = extension;
-            setCategorizerType(new PdfFileTypeCategorizer());
-            Categorize();
-
+            _FileTypeCategorizer = new FileTypeCategorizer(new PdfFileTypeCategorizer());
+            _FileTypeCategorizer.Categorize(this);
         }
     }
     public class DocFileType : FileType
@@ -84,9 +73,8 @@ namespace FileCategorizingProject
         {
             Name = name;
             Extension = extension;
-            setCategorizerType(new DocFileTypeCategorizer());
-            Categorize();
-
+            _FileTypeCategorizer = new FileTypeCategorizer(new DocFileTypeCategorizer());
+            _FileTypeCategorizer.Categorize(this);
         }
     }
 }

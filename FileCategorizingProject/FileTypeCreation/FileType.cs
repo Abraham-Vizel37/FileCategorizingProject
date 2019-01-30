@@ -4,20 +4,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace FileCategorizingProject
 {
-    public class FileType
+    public abstract class FileType
     {
         protected string Name;
         protected string Extension;
+
         protected List<string> Categories = new List<string> { };
         protected List<string> SubCategories = new List<string> { };
+        protected LogicChainFactory _logicChainFactory;
         protected FileTypeCategorizer _FileTypeCategorizer;
 
         public FileType(string name, string extension)
         {
             Name = name;
-            Extension = extension;            
+            Extension = extension;
+            _FileTypeCategorizer = new FileTypeCategorizer(new AllFileTypesCategorizer());
+            _FileTypeCategorizer.Categorize(this);
         }
 
         public string getName()
@@ -28,6 +33,7 @@ namespace FileCategorizingProject
         {
             return Extension;
         }
+
         public List<string> getCategories()
         {
             return Categories;
@@ -36,6 +42,7 @@ namespace FileCategorizingProject
         {
             return SubCategories;
         }
+
         public void setCategories(List<string> categories)
         {
             Categories = categories;
@@ -43,6 +50,15 @@ namespace FileCategorizingProject
         public void setSubCategories(List<string> subCategories)
         {
             SubCategories = subCategories;
+        }
+
+        public void addCategory(string newCategory)
+        {
+            Categories.Add(newCategory);
+        }
+        public void addSubCategory(string newSubCategory)
+        {
+            SubCategories.Add(newSubCategory);
         }
     }
 
@@ -52,9 +68,6 @@ namespace FileCategorizingProject
         {
             Name = name;
             Extension = extension;
-            _FileTypeCategorizer = new FileTypeCategorizer(new ExeFileTypeCategorizer());
-            _FileTypeCategorizer.Categorize(this);
-
         }
     }
     public class PdfFileType : FileType
@@ -63,8 +76,6 @@ namespace FileCategorizingProject
         {
             Name = name;
             Extension = extension;
-            _FileTypeCategorizer = new FileTypeCategorizer(new PdfFileTypeCategorizer());
-            _FileTypeCategorizer.Categorize(this);
         }
     }
     public class DocFileType : FileType
@@ -72,9 +83,7 @@ namespace FileCategorizingProject
         public DocFileType(string name, string extension) : base(name, extension)
         {
             Name = name;
-            Extension = extension;
-            _FileTypeCategorizer = new FileTypeCategorizer(new DocFileTypeCategorizer());
-            _FileTypeCategorizer.Categorize(this);
+            Extension = extension;           
         }
     }
 }

@@ -14,22 +14,37 @@ namespace FileCategorizingProject
         public bool Contains(string fileName, char first) => fileName.Contains(first);
         public bool FollowedBy(string fileName, char first, char second) => fileName.Contains(first) ? fileName.Substring(fileName.IndexOf(first)).Contains(second) : false;
     }
-    public abstract class ExeCategoryLogic : CoreCategoryLogic
+
+    public abstract class CategorizingLogicLinks : CoreCategoryLogic, IChainCategoryLogic
+    {
+        protected IChainCategoryLogic _NextChain;
+
+        public void SetNextChain(IChainCategoryLogic chain)
+        {
+            _NextChain = chain;
+        }
+
+        public abstract void Categorize(FileType file);
+    }
+
+    public abstract class AFollowedByBLink : CategorizingLogicLinks, IChainCategoryLogic
     {
         public bool AFollowedByB(string fileName) => FollowedBy(fileName, 'a', 'b');
-        public bool ContainsC(string fileName) => Contains(fileName, 'c');
-        public bool ContainsG(string fileName) => Contains(fileName, 'g');
     }
-    public abstract class PdfCategoryLogic : CoreCategoryLogic
-    {
-        public bool AFollowedByB(string fileName) => FollowedBy(fileName, 'a', 'b');
-        public bool BFollowedByA(string fileName) => FollowedBy(fileName, 'b', 'a');
-        public bool ContainsC(string fileName) => Contains(fileName, 'c');
-    }
-    public abstract class DocCategoryLogic : CoreCategoryLogic
+    public abstract class BFollowedByALink : CategorizingLogicLinks, IChainCategoryLogic
     {
         public bool BFollowedByA(string fileName) => FollowedBy(fileName, 'b', 'a');
+    }
+    public abstract class GFollowedByBLink : CategorizingLogicLinks, IChainCategoryLogic
+    {
         public bool GFollowedByB(string fileName) => FollowedBy(fileName, 'g', 'b');
+    }
+    public abstract class ContainsCLink : CategorizingLogicLinks, IChainCategoryLogic
+    {
+        public bool ContainsC(string fileName) => Contains(fileName, 'c');
+    }
+    public abstract class ContainsGLink : CategorizingLogicLinks, IChainCategoryLogic
+    {
         public bool ContainsG(string fileName) => Contains(fileName, 'g');
     }
 

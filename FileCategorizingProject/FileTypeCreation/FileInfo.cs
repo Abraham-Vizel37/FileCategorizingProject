@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FileCategorizingProject
 {
-    public abstract class FileType
+    public class FileInfo
     {
         protected string Name;
         protected string Extension;
@@ -15,14 +15,14 @@ namespace FileCategorizingProject
         protected List<string> Categories = new List<string> { };
         protected List<string> SubCategories = new List<string> { };
         protected LogicChainFactory _logicChainFactory;
-        protected FileTypeCategorizer _FileTypeCategorizer;
 
-        public FileType(string name, string extension)
+        public FileInfo(string name, string extension)
         {
             Name = name;
             Extension = extension;
-            _FileTypeCategorizer = new FileTypeCategorizer(new AllFileTypesCategorizer());
-            _FileTypeCategorizer.Categorize(this);
+            _logicChainFactory = new LogicChainFactory(this);
+            setCategories();
+            setSubCategories();            
         }
 
         public string getName()
@@ -43,13 +43,13 @@ namespace FileCategorizingProject
             return SubCategories;
         }
 
-        public void setCategories(List<string> categories)
-        {
-            Categories = categories;
+        public void setCategories()
+        {            
+            _logicChainFactory.getCategoryChain().Categorize(this);
         }
-        public void setSubCategories(List<string> subCategories)
+        public void setSubCategories()
         {
-            SubCategories = subCategories;
+            _logicChainFactory.getSubCategoryChain().Categorize(this);
         }
 
         public void addCategory(string newCategory)
@@ -62,7 +62,7 @@ namespace FileCategorizingProject
         }
     }
 
-    public class ExeFileType : FileType
+    public class ExeFileType : FileInfo
     {
         public ExeFileType(string name, string extension) : base(name, extension)
         {
@@ -70,7 +70,7 @@ namespace FileCategorizingProject
             Extension = extension;
         }
     }
-    public class PdfFileType : FileType
+    public class PdfFileType : FileInfo
     {
         public PdfFileType(string name, string extension) : base(name, extension)
         {
@@ -78,7 +78,7 @@ namespace FileCategorizingProject
             Extension = extension;
         }
     }
-    public class DocFileType : FileType
+    public class DocFileType : FileInfo
     {
         public DocFileType(string name, string extension) : base(name, extension)
         {

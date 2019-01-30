@@ -9,10 +9,10 @@ namespace FileCategorizingProject
     public class LogicChainFactory
     {
         private string _extension;
-        private IChainCategoryLogic _Categories;
-        private IChainCategoryLogic _SubCategories;
+        private IChainCategoryLogic _categories;
+        private IChainCategoryLogic _subCategories;
 
-        public LogicChainFactory(FileType file)
+        public LogicChainFactory(FileInfo file)
         {
             _extension = file.getExtension();
             setCategoryChain();
@@ -25,17 +25,17 @@ namespace FileCategorizingProject
             {
                 case ".exe":
                 case ".txt":
-                    _Categories = new ExeCategorizeAFollowedByB();
-                    _Categories.SetNextChain(new ExeCategorizeContainsG());
+                    _categories = new ExeCategorizeAFollowedByB();
+                    _categories.SetNextChain(new ExeCategorizeContainsG());
                     break;
                 case ".pdf":
                 case ".bmp":
-                    _Categories = new PdfCategorizeBFollowedByA();
-                    _Categories.SetNextChain(new PdfCategorizeContainsC());
+                    _categories = new PdfCategorizeBFollowedByA();
+                    _categories.SetNextChain(new PdfCategorizeContainsC());
                     break;
                 case ".docx":
-                    _Categories = new DocCategorizeBFollowedByA();
-                    _Categories.SetNextChain(new DocCategorizeContainsG());
+                    _categories = new DocCategorizeBFollowedByA();
+                    _categories.SetNextChain(new DocCategorizeContainsG());
                     break;
                 default:
                     break;
@@ -48,19 +48,19 @@ namespace FileCategorizingProject
             {
                 case ".exe":
                 case ".txt":
-                    _SubCategories = new ExeSubCategorizeContainsC();
-                    _SubCategories = new ExeSubCategorizeAFollowedByB();
-                    _SubCategories.SetNextChain(new ExeSubCategorizeContainsZ());
+                    _subCategories = new ExeSubCategorizeContainsC();
+                    _subCategories = new ExeSubCategorizeAFollowedByB();
+                    _subCategories.SetNextChain(new ExeSubCategorizeContainsZ());
                     break;
                 case ".pdf":
                 case ".bmp":
-                    _SubCategories = new PdfSubCategorizeAFolloedByB();
-                    _SubCategories.SetNextChain(new PdfSubCategorizeContainsZ());
+                    _subCategories = new PdfSubCategorizeAFolloedByB();
+                    _subCategories.SetNextChain(new PdfSubCategorizeContainsZ());
                     break;
                 case ".docx":
-                    _SubCategories = new DocSubCategorizeContainsG();
-                    _SubCategories.SetNextChain(new DocSubCategorizeGFollowedByB());
-                    _SubCategories.SetNextChain(new DocSubCategorizeContainsZ());
+                    _subCategories = new DocSubCategorizeContainsG();
+                    _subCategories.SetNextChain(new DocSubCategorizeGFollowedByB());
+                    _subCategories.SetNextChain(new DocSubCategorizeContainsZ());
                     break;
                 default:
                     break;
@@ -69,11 +69,11 @@ namespace FileCategorizingProject
 
         public IChainCategoryLogic getCategoryChain()
         {
-            return _Categories;
+            return _categories;
         }
         public IChainCategoryLogic getSubCategoryChain()
         {
-            return _SubCategories;
+            return _subCategories;
         }
     }
 }

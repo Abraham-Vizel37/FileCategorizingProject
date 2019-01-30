@@ -44,10 +44,9 @@
   <ItemGroup>
     <Compile Include="Logic\DocCategoryLogic.cs" />
     <Compile Include="Logic\ExeCategoryLogic.cs" />
-    <Compile Include="Logic\FileTypeCategoryLogic.cs" />
-    <Compile Include="FileTypeCreation\FileTypeCategorizer.cs" />
-    <Compile Include="FileTypeCreation\FileTypeFactory.cs" />
-    <Compile Include="FileTypeCreation\FileType.cs" />
+    <Compile Include="Logic\FileInfoCategoryLogic.cs" />
+    <Compile Include="FileTypeCreation\FileInfoFactory.cs" />
+    <Compile Include="FileTypeCreation\FileInfo.cs" />
     <Compile Include="Intefaces\ICategorize.cs" />
     <Compile Include="Logic\LogicChainFactory.cs" />
     <Compile Include="Logic\PdfCategoryLogic.cs" />

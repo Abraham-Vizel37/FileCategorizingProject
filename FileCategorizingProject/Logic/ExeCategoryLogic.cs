@@ -8,31 +8,31 @@ namespace FileCategorizingProject
 {
     public class ExeCategorizeAFollowedByB : AFollowedByBLink
     {
-        public override void Categorize(FileType file)
+        public override void Categorize(FileInfo file)
         {
             if (AFollowedByB(file.getName()))
             {
                 file.addCategory("ab");
             }
-            if (_NextChain!=null)
-                _NextChain.Categorize(file);
+            if (NextChain!=null)
+                NextChain.Categorize(file);
         }
     }
     public class ExeCategorizeContainsG : ContainsGLink
     {
-        public override void Categorize(FileType file)
+        public override void Categorize(FileInfo file)
         {
             if (ContainsG(file.getName()))
             {
                 file.addCategory("g");
             }
-            if (_NextChain != null)
-                _NextChain.Categorize(file);
+            if (NextChain != null)
+                NextChain.Categorize(file);
         }
     }
     public class ExeSubCategorizeAFollowedByB : AFollowedByBLink
     {
-        public override void Categorize(FileType file)
+        public override void Categorize(FileInfo file)
         {
             if (file.getCategories().Contains("ab"))
             {
@@ -41,25 +41,25 @@ namespace FileCategorizingProject
                     file.addSubCategory("ba");
                 }
             }
-            if (_NextChain != null)
-                _NextChain.Categorize(file);
+            if (NextChain != null)
+                NextChain.Categorize(file);
         }
     }
     public class ExeSubCategorizeContainsC : ContainsCLink
     {
-        public override void Categorize(FileType file)
+        public override void Categorize(FileInfo file)
         {
             if (ContainsC(file.getName()))
             {
                 file.addSubCategory("c");
             }
-            if (_NextChain != null)
-                _NextChain.Categorize(file);
+            if (NextChain != null)
+                NextChain.Categorize(file);
         }
     }
     public class ExeSubCategorizeContainsZ : CategorizingLogicLinks
     {
-        public override void Categorize(FileType file)
+        public override void Categorize(FileInfo file)
         {
             if (file.getCategories().Contains("g"))
             {
@@ -68,8 +68,8 @@ namespace FileCategorizingProject
                     file.addSubCategory("z");
                 }
             }
-            if (_NextChain != null)
-                _NextChain.Categorize(file);
+            if (NextChain != null)
+                NextChain.Categorize(file);
         }
     }
 }

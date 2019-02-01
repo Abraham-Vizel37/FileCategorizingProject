@@ -29,6 +29,7 @@ namespace FileCategorizingProject
         {
             return Name;
         }
+
         public string getExtension()
         {
             return Extension;
@@ -59,31 +60,6 @@ namespace FileCategorizingProject
         public void addSubCategory(string newSubCategory)
         {
             SubCategories.Add(newSubCategory);
-        }
-    }
-
-    public class ExeFileType : FileInfo
-    {
-        public ExeFileType(string name, string extension) : base(name, extension)
-        {
-            Name = name;
-            Extension = extension;
-        }
-    }
-    public class PdfFileType : FileInfo
-    {
-        public PdfFileType(string name, string extension) : base(name, extension)
-        {
-            Name = name;
-            Extension = extension;
-        }
-    }
-    public class DocFileType : FileInfo
-    {
-        public DocFileType(string name, string extension) : base(name, extension)
-        {
-            Name = name;
-            Extension = extension;           
         }
     }
 }

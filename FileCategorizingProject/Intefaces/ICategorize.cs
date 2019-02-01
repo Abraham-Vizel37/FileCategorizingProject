@@ -8,13 +8,28 @@ namespace FileCategorizingProject
 {
     public interface ICategorizeFile
     {
-        void Categorize(FileInfo file, IChainCategoryLogic _Categories);
-        void SubCategorize(FileInfo file, IChainCategoryLogic _SubCategories);
+        void Categorize(FileInfo file, IChainCategorization _Categories);
+        void SubCategorize(FileInfo file, IChainCategorization _SubCategories);
     }
 
-    public interface IChainCategoryLogic
+    public interface IChainCategorization
     {
-        void SetNextChain(IChainCategoryLogic chain);
+        void SetNextChain(IChainCategorization chain);
         void Categorize(FileInfo file);
+    }
+
+    public interface ILogic
+    {
+        bool DoLogic(FileInfo file);
+    }
+
+    public interface ICategory
+    {
+        string GetCategory();
+    }
+
+    public interface ISubCategory
+    {
+        string GetSubCategory();
     }
 }

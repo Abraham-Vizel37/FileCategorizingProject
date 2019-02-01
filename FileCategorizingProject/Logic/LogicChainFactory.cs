@@ -9,8 +9,8 @@ namespace FileCategorizingProject
     public class LogicChainFactory
     {
         private string _extension;
-        private IChainCategoryLogic _categories;
-        private IChainCategoryLogic _subCategories;
+        private IChainCategorization _categories;
+        private IChainCategorization _subCategories;
 
         public LogicChainFactory(FileInfo file)
         {
@@ -54,7 +54,7 @@ namespace FileCategorizingProject
                     break;
                 case ".pdf":
                 case ".bmp":
-                    _subCategories = new PdfSubCategorizeAFolloedByB();
+                    _subCategories = new PdfSubCategorizeAFollowedByB();
                     _subCategories.SetNextChain(new PdfSubCategorizeContainsZ());
                     break;
                 case ".docx":
@@ -67,11 +67,11 @@ namespace FileCategorizingProject
             }
         }
 
-        public IChainCategoryLogic getCategoryChain()
+        public IChainCategorization getCategoryChain()
         {
             return _categories;
         }
-        public IChainCategoryLogic getSubCategoryChain()
+        public IChainCategorization getSubCategoryChain()
         {
             return _subCategories;
         }

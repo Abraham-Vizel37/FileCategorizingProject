@@ -23,77 +23,83 @@ namespace FileCategorizingProject
         {
             if (Logic.DoLogic(file))
             {
-                if(Category!=null)
-                file.addCategory(Category.GetCategory());
-                else
+                if (Category != null)
                 {
-                    file.addSubCategory(SubCategory.GetSubCategory());
+                    file.AddCategory(Category.GetCategory());
                 }
+                else if (SubCategory != null)
+                {
+                    file.AddSubCategory(SubCategory.GetSubCategory());
+                }                
             }
             if (NextChain != null)
                 NextChain.Categorize(file);
-        }
+        }      
+    }
 
+    public abstract class SimpleLogicLink : CategorizingLogicLinks, ILogic
+    {
+        public abstract bool DoLogic(FileInfo file);
 
         public bool ContainsZ(string fileName) => Contains(fileName, 'z');
         public bool Contains(string fileName, char first) => fileName.Contains(first);
         public bool FollowedBy(string fileName, char first, char second) => fileName.Contains(first) ? fileName.Substring(fileName.IndexOf(first)).Contains(second) : false;
-
-
     }
 
-    public abstract class LogicClass : CategorizingLogicLinks, ILogic
-    {
-        public abstract bool DoLogic(FileInfo file);
-
-    }
-
-    public abstract class AFollowedByBLink : LogicClass, ILogic
+    public abstract class AFollowedByBLink : SimpleLogicLink, ILogic
     {
         public override bool DoLogic(FileInfo file)
         {
-            return AFollowedByB(file.getName());
+            return AFollowedByB(file.GetName());
         }
 
-        public bool AFollowedByB(string fileName) => FollowedBy(fileName, 'a', 'b');
-        
+        public bool AFollowedByB(string fileName) => FollowedBy(fileName, 'a', 'b');        
     }
-    public abstract class BFollowedByALink : LogicClass, ILogic
+    public abstract class BFollowedByALink : SimpleLogicLink, ILogic
     {
         public override bool DoLogic(FileInfo file)
         {
-            return BFollowedByA(file.getName());
+            return BFollowedByA(file.GetName());
         }
 
         public bool BFollowedByA(string fileName) => FollowedBy(fileName, 'b', 'a');
     }
-    public abstract class GFollowedByBLink : LogicClass, ILogic
+    public abstract class GFollowedByBLink : SimpleLogicLink, ILogic
     {
         public override bool DoLogic(FileInfo file)
         {
-            return GFollowedByB(file.getName());
+            return GFollowedByB(file.GetName());
         }
 
         public bool GFollowedByB(string fileName) => FollowedBy(fileName, 'g', 'b');
     }
-    public abstract class ContainsCLink : LogicClass, ILogic
+
+    public abstract class ContainsCLink : SimpleLogicLink, ILogic
     {
         public override bool DoLogic(FileInfo file)
         {
-            return ContainsC(file.getName());
+            return ContainsC(file.GetName());
         }
 
         public bool ContainsC(string fileName) => Contains(fileName, 'c');
     }
-    public abstract class ContainsGLink : LogicClass, ILogic
+    public abstract class ContainsGLink : SimpleLogicLink, ILogic
     {
         public override bool DoLogic(FileInfo file)
         {
-            return ContainsG(file.getName());
-
+            return ContainsG(file.GetName());
         }
+
         public bool ContainsG(string fileName) => Contains(fileName, 'g');
     }
+    public abstract class ContainsZLink : SimpleLogicLink, ILogic
+    {
+        public override bool DoLogic(FileInfo file)
+        {
+            return ContainsZ(file.GetName());
+        }
 
+        public bool ContainsZ(string fileName) => Contains(fileName, 'z');
+    }
 
 }

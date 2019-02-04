@@ -14,50 +14,51 @@ namespace FileCategorizingProject
 
         protected List<string> Categories = new List<string> { };
         protected List<string> SubCategories = new List<string> { };
+
         protected LogicChainFactory _logicChainFactory;
 
         public FileInfo(string name, string extension)
         {
             Name = name;
             Extension = extension;
-            _logicChainFactory = new LogicChainFactory(this);
-            setCategories();
-            setSubCategories();            
+            _logicChainFactory = new LogicChainFactory();
+            _logicChainFactory.ProcessFile(this);
+            SetCategories();
+            SetSubCategories();            
         }
 
-        public string getName()
+        public string GetName()
         {
             return Name;
         }
-
-        public string getExtension()
+        public string GetExtension()
         {
             return Extension;
         }
 
-        public List<string> getCategories()
+        public List<string> GetCategories()
         {
             return Categories;
         }
-        public List<string> getSubCategories()
+        public List<string> GetSubCategories()
         {
             return SubCategories;
         }
 
-        public void setCategories()
+        public void SetCategories()
         {            
             _logicChainFactory.getCategoryChain().Categorize(this);
         }
-        public void setSubCategories()
+        public void SetSubCategories()
         {
             _logicChainFactory.getSubCategoryChain().Categorize(this);
         }
 
-        public void addCategory(string newCategory)
+        public void AddCategory(string newCategory)
         {
             Categories.Add(newCategory);
         }
-        public void addSubCategory(string newSubCategory)
+        public void AddSubCategory(string newSubCategory)
         {
             SubCategories.Add(newSubCategory);
         }

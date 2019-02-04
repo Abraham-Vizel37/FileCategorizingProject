@@ -45,7 +45,7 @@ namespace FileCategorizingProject
             return "gb";
         }
     }
-    public class DocSubCategorizeContainsG : LogicClass, ISubCategory
+    public class DocSubCategorizeContainsG : SimpleLogicLink, ISubCategory
     {
         public DocSubCategorizeContainsG()
         {
@@ -55,17 +55,15 @@ namespace FileCategorizingProject
 
         public override bool DoLogic(FileInfo file)
         {
-            return (file.getCategories().Contains("g") && file.getCategories().Contains("cb"));
+            return (file.GetCategories().Contains("g") && file.GetCategories().Contains("cb"));
         }
 
         public string GetSubCategory()
         {
             return "g";
         }
-
-
     }
-    public class DocSubCategorizeContainsZ : CategorizingLogicLinks, ILogic, ISubCategory
+    public class DocSubCategorizeContainsZ : SimpleLogicLink, ISubCategory
     {
         public DocSubCategorizeContainsZ()
         {
@@ -73,15 +71,14 @@ namespace FileCategorizingProject
             SubCategory = this;
         }
 
-        public bool DoLogic(FileInfo file)
+        public override bool DoLogic(FileInfo file)
         {
-            return ((file.getCategories().Contains("cb") || file.getCategories().Contains("g")) && ContainsZ(file.getName()));
+            return ((file.GetCategories().Contains("cb") || (file.GetCategories().Contains("g")) && ContainsZ(file.GetName())));
         }
 
         public string GetSubCategory()
         {
             return "c";
         }
-
     }
 }

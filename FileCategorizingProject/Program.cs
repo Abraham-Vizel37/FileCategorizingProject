@@ -17,37 +17,39 @@ namespace FileCategorizingProject
             var fileNames = from names
                             in Directory.GetFiles(dir)
                             select Path.GetFileName(names);
-            
+
+            FileInfoFactory factory = new FileInfoFactory();
+
             foreach (string fileName in fileNames)
             {
-                files.Add(new FileInfoFactory(fileName).GetFileType());
+                files.Add(factory.GetFileInfo(fileName));
             }
 
             foreach (FileInfo p in files)
             {
-                Console.Write(p.getName() + "\t| " + p.getExtension() + "\t| ");
-                for (int i = 0; i < p.getCategories().Count(); i++)
+                Console.Write(p.GetName() + "\t| " + p.GetExtension() + "\t| ");
+                for (int i = 0; i < p.GetCategories().Count(); i++)
                 {
-                    if (i == p.getCategories().Count() - 1)
+                    if (i == p.GetCategories().Count() - 1)
                     {
-                        Console.Write(p.getCategories()[i]);
+                        Console.Write(p.GetCategories()[i]);
                     }
                     else
                     {
-                        Console.Write(p.getCategories()[i] + ",");
+                        Console.Write(p.GetCategories()[i] + ",");
                     }
                     
                 }
                 Console.Write("\t| ");
-                for (int i = 0; i < p.getSubCategories().Count(); i++)
+                for (int i = 0; i < p.GetSubCategories().Count(); i++)
                 {
-                    if (i == p.getCategories().Count()-1)
+                    if (i == p.GetSubCategories().Count()-1)
                     {
-                        Console.Write(p.getSubCategories()[i]);
+                        Console.Write(p.GetSubCategories()[i]);
                     }
                     else
                     {
-                        Console.Write(p.getSubCategories()[i] + ",");
+                        Console.Write(p.GetSubCategories()[i] + ",");
                     }
                 }
                 Console.Write("\n");

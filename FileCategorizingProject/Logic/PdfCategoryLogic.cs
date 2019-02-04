@@ -8,7 +8,6 @@ namespace FileCategorizingProject
 {
     public class PdfCategorizeBFollowedByA : BFollowedByALink, ICategory
     {
-
         public PdfCategorizeBFollowedByA()
         {
             Logic = this;
@@ -19,7 +18,6 @@ namespace FileCategorizingProject
         {
             return "ab";
         }
-
     }
     public class PdfCategorizeContainsC : ContainsCLink, ICategory
     {
@@ -36,7 +34,6 @@ namespace FileCategorizingProject
     }
     public class PdfSubCategorizeAFollowedByB : AFollowedByBLink, ISubCategory
     {
-
         public PdfSubCategorizeAFollowedByB()
         {
             Logic = this;
@@ -48,7 +45,7 @@ namespace FileCategorizingProject
             return "ba";
         }
     }
-    public class PdfSubCategorizeContainsZ: CategorizingLogicLinks, ILogic, ISubCategory
+    public class PdfSubCategorizeContainsZ: SimpleLogicLink, ISubCategory
     {
         public PdfSubCategorizeContainsZ()
         {
@@ -56,9 +53,9 @@ namespace FileCategorizingProject
             SubCategory = this;
         }
 
-        public bool DoLogic(FileInfo file)
+        public override bool DoLogic(FileInfo file)
         {
-            return ((file.getCategories().Contains("ab") || file.getCategories().Contains("c")) && ContainsZ(file.getName()));
+            return ((file.GetCategories().Contains("ab") || (file.GetCategories().Contains("c")) && ContainsZ(file.GetName())));
         }
 
         public string GetSubCategory()

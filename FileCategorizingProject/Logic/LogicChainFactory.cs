@@ -14,13 +14,6 @@ namespace FileCategorizingProject
         private List<IChainCategorization> _categoryLinks = new List<IChainCategorization> { };
         private List<IChainCategorization> _subCategoryLinks = new List<IChainCategorization> { };
 
-        //public LogicChainFactory(FileInfo file)
-        //{
-        //    _extension = file.getExtension();
-        //    setCategoryChain();
-        //    setSubCategoryChain();
-        //}
-
         public void ProcessFile(FileInfo file)
         {
             _extension = file.GetExtension();

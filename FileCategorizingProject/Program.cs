@@ -41,7 +41,7 @@ namespace FileCategorizingProject
                 Console.Write("\t| ");
                 for (int i = 0; i < p.getSubCategories().Count(); i++)
                 {
-                    if (i == p.getCategories().Count()-1)
+                    if (i == p.getSubCategories().Count()-1)
                     {
                         Console.Write(p.getSubCategories()[i]);
                     }

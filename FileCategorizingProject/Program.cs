@@ -54,6 +54,7 @@ namespace FileCategorizingProject
                 }
                 Console.Write("\n");
             }
+
             Console.ReadLine();
         }
     }

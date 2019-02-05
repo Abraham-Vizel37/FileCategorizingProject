@@ -47,11 +47,11 @@ namespace FileCategorizingProject
 
         public void SetCategories()
         {            
-            _logicChainFactory.getCategoryChain().Categorize(this);
+            _logicChainFactory.GetCategoryChain().Categorize(this);
         }
         public void SetSubCategories()
         {
-            _logicChainFactory.getSubCategoryChain().Categorize(this);
+            _logicChainFactory.GetSubCategoryChain().Categorize(this);
         }
 
         public void AddCategory(string newCategory)

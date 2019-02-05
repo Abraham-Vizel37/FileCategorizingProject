@@ -17,11 +17,11 @@ namespace FileCategorizingProject
         public void ProcessFile(FileInfo file)
         {
             _extension = file.GetExtension();
-            setCategoryChain();
-            setSubCategoryChain();
+            SetCategoryChain();
+            SetSubCategoryChain();
         }
 
-        private void setCategoryChain()
+        private void SetCategoryChain()
         {
             switch (_extension)
             {
@@ -53,7 +53,7 @@ namespace FileCategorizingProject
             }
 
         }
-        private void setSubCategoryChain()
+        private void SetSubCategoryChain()
         {
             switch (_extension)
             {
@@ -86,11 +86,11 @@ namespace FileCategorizingProject
             }
         }
 
-        public IChainCategorization getCategoryChain()
+        public IChainCategorization GetCategoryChain()
         {
             return _categories;
         }
-        public IChainCategorization getSubCategoryChain()
+        public IChainCategorization GetSubCategoryChain()
         {
             return _subCategories;
         }

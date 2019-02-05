@@ -6,15 +6,24 @@ using System.Threading.Tasks;
 
 namespace FileCategorizingProject
 {
-    public interface ICategorizeFile
+    public interface IChainCategorization
     {
-        void Categorize(FileInfo file, IChainCategoryLogic _Categories);
-        void SubCategorize(FileInfo file, IChainCategoryLogic _SubCategories);
+        void SetNextChain(IChainCategorization chain);
+        void Categorize(FileInfo file);
     }
 
-    public interface IChainCategoryLogic
+    public interface ILogic
     {
-        void SetNextChain(IChainCategoryLogic chain);
-        void Categorize(FileInfo file);
+        bool DoLogic(FileInfo file);
+    }
+
+    public interface ICategory
+    {
+        string GetCategory();
+    }
+
+    public interface ISubCategory
+    {
+        string GetSubCategory();
     }
 }

@@ -6,52 +6,61 @@ using System.Threading.Tasks;
 
 namespace FileCategorizingProject
 {
-    public class PdfCategorizeBFollowedByA : BFollowedByALink
+    public class PdfCategorizeBFollowedByA : BFollowedByALink, ICategory
     {
-        public override void Categorize(FileInfo file)
+        public PdfCategorizeBFollowedByA()
         {
-            if (BFollowedByA(file.getName()))
-            {
-                file.addCategory("ab");
-            }
-            if (NextChain != null)
-                NextChain.Categorize(file);
+            Logic = this;
+            Category = this;
+        }
+
+        public string GetCategory()
+        {
+            return "ab";
         }
     }
-    public class PdfCategorizeContainsC : ContainsCLink
+    public class PdfCategorizeContainsC : ContainsCLink, ICategory
     {
-        public override void Categorize(FileInfo file)
+        public PdfCategorizeContainsC()
         {
-            if (ContainsC(file.getName()))
-            {
-                file.addCategory("c");
-            }
-            if (NextChain != null)
-                NextChain.Categorize(file);
+            Logic = this;
+            Category = this;
+        }
+
+        public string GetCategory()
+        {
+            return "c";
         }
     }
-    public class PdfSubCategorizeAFolloedByB : AFollowedByBLink
+    public class PdfSubCategorizeAFollowedByB : AFollowedByBLink, ISubCategory
     {
-        public override void Categorize(FileInfo file)
+        public PdfSubCategorizeAFollowedByB()
         {
-            if (AFollowedByB(file.getName()))
-            {
-                file.addSubCategory("ba");
-            }
-            if (NextChain != null)
-                NextChain.Categorize(file);
+            Logic = this;
+            SubCategory = this;
+        }
+
+        public string GetSubCategory()
+        {
+            return "ba";
         }
     }
-    public class PdfSubCategorizeContainsZ: CategorizingLogicLinks
+    public class PdfSubCategorizeContainsZ: SimpleLogicLink, ISubCategory
     {
-        public override void Categorize(FileInfo file)
+        public PdfSubCategorizeContainsZ()
         {
-            if (ContainsZ(file.getName()))
-            {
-                file.addSubCategory("z");
-            }
-            if (NextChain != null)
-                NextChain.Categorize(file);
+            Logic = this;
+            SubCategory = this;
+        }
+
+        public override bool DoLogic(FileInfo file)
+        {
+            return ((file.GetCategories().Contains("ab") || (file.GetCategories().Contains("c")) && ContainsZ(file.GetName())));
+        }
+
+        public string GetSubCategory()
+        {
+            return "z";
         }
     }
 }

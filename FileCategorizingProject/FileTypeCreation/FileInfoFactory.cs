@@ -11,14 +11,10 @@ namespace FileCategorizingProject
         private string _name;
         private string _extension;
 
-        public FileInfoFactory(string name)
+        public FileInfo GetFileInfo(string name)
         {
             _name = FindFileName(name);
             _extension = FindExtention(name);
-        }
-
-        public FileInfo GetFileType()
-        {
             return new FileInfo(_name, _extension);
         }
 

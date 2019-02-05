@@ -9,69 +9,88 @@ namespace FileCategorizingProject
     public class LogicChainFactory
     {
         private string _extension;
-        private IChainCategoryLogic _categories;
-        private IChainCategoryLogic _subCategories;
+        private IChainCategorization _categories;
+        private IChainCategorization _subCategories;
+        private List<IChainCategorization> _categoryLinks = new List<IChainCategorization> { };
+        private List<IChainCategorization> _subCategoryLinks = new List<IChainCategorization> { };
 
-        public LogicChainFactory(FileInfo file)
+        public void ProcessFile(FileInfo file)
         {
-            _extension = file.getExtension();
-            setCategoryChain();
-            setSubCategoryChain();
+            _extension = file.GetExtension();
+            SetCategoryChain();
+            SetSubCategoryChain();
         }
 
-        private void setCategoryChain()
+        private void SetCategoryChain()
         {
             switch (_extension)
             {
                 case ".exe":
                 case ".txt":
                     _categories = new ExeCategorizeAFollowedByB();
-                    _categories.SetNextChain(new ExeCategorizeContainsG());
+                    _categoryLinks.Add(new ExeCategorizeContainsG());
                     break;
                 case ".pdf":
                 case ".bmp":
                     _categories = new PdfCategorizeBFollowedByA();
-                    _categories.SetNextChain(new PdfCategorizeContainsC());
+                    _categoryLinks.Add(new PdfCategorizeContainsC());                    
                     break;
                 case ".docx":
                     _categories = new DocCategorizeBFollowedByA();
-                    _categories.SetNextChain(new DocCategorizeContainsG());
+                    _categoryLinks.Add(new DocCategorizeContainsG());                   
                     break;
                 default:
-                    break;
-                    
+                    break;                    
             }
+
+            if (_categoryLinks.Count > 0)
+            {
+                for(int i = 0; i < _categoryLinks.Count()-1; i++)
+                {
+                    _categoryLinks[i].SetNextChain(_categoryLinks[i + 1]);
+                }
+                _categories.SetNextChain(_categoryLinks[0]);
+            }
+
         }
-        private void setSubCategoryChain()
+        private void SetSubCategoryChain()
         {
             switch (_extension)
             {
                 case ".exe":
                 case ".txt":
                     _subCategories = new ExeSubCategorizeContainsC();
-                    _subCategories = new ExeSubCategorizeAFollowedByB();
-                    _subCategories.SetNextChain(new ExeSubCategorizeContainsZ());
+                    _subCategoryLinks.Add(new ExeSubCategorizeAFollowedByB());
+                    _subCategoryLinks.Add(new ExeSubCategorizeContainsZ());
                     break;
                 case ".pdf":
                 case ".bmp":
-                    _subCategories = new PdfSubCategorizeAFolloedByB();
-                    _subCategories.SetNextChain(new PdfSubCategorizeContainsZ());
+                    _subCategories = new PdfSubCategorizeAFollowedByB();
+                    _subCategoryLinks.Add(new PdfSubCategorizeContainsZ());                    
                     break;
                 case ".docx":
                     _subCategories = new DocSubCategorizeContainsG();
-                    _subCategories.SetNextChain(new DocSubCategorizeGFollowedByB());
-                    _subCategories.SetNextChain(new DocSubCategorizeContainsZ());
+                    _subCategoryLinks.Add(new DocSubCategorizeGFollowedByB());
+                    _subCategoryLinks.Add(new DocSubCategorizeContainsZ());
                     break;
                 default:
                     break;
             }
+            if (_subCategoryLinks.Count != 0)
+            {
+                for (int i = 0; i < _subCategoryLinks.Count()-1; i++)
+                {                    
+                    _subCategoryLinks[i].SetNextChain(_subCategoryLinks[i + 1]);
+                }
+                _subCategories.SetNextChain(_subCategoryLinks[0]);
+            }
         }
 
-        public IChainCategoryLogic getCategoryChain()
+        public IChainCategorization GetCategoryChain()
         {
             return _categories;
         }
-        public IChainCategoryLogic getSubCategoryChain()
+        public IChainCategorization GetSubCategoryChain()
         {
             return _subCategories;
         }

@@ -6,70 +6,79 @@ using System.Threading.Tasks;
 
 namespace FileCategorizingProject
 {
-    public class ExeCategorizeAFollowedByB : AFollowedByBLink
+    public class ExeCategorizeAFollowedByB : AFollowedByBLink, ICategory
     {
-        public override void Categorize(FileInfo file)
+        public ExeCategorizeAFollowedByB()
         {
-            if (AFollowedByB(file.getName()))
-            {
-                file.addCategory("ab");
-            }
-            if (NextChain!=null)
-                NextChain.Categorize(file);
+            Logic = this;
+            Category = this;
+        }
+
+        public string GetCategory()
+        {
+            return "ab";
         }
     }
-    public class ExeCategorizeContainsG : ContainsGLink
+    public class ExeCategorizeContainsG : ContainsGLink, ICategory
     {
-        public override void Categorize(FileInfo file)
+        public ExeCategorizeContainsG()
         {
-            if (ContainsG(file.getName()))
-            {
-                file.addCategory("g");
-            }
-            if (NextChain != null)
-                NextChain.Categorize(file);
+            Logic = this;
+            Category = this;
+        }
+
+        public string GetCategory()
+        {
+            return "g";
         }
     }
-    public class ExeSubCategorizeAFollowedByB : AFollowedByBLink
+    public class ExeSubCategorizeAFollowedByB : SimpleLogicLink, ISubCategory
     {
-        public override void Categorize(FileInfo file)
+        public ExeSubCategorizeAFollowedByB()
         {
-            if (file.getCategories().Contains("ab"))
-            {
-                if (file.getCategories().Contains("g"))
-                {
-                    file.addSubCategory("ba");
-                }
-            }
-            if (NextChain != null)
-                NextChain.Categorize(file);
+            Logic = this;
+            SubCategory = this;
+        }
+
+        public override bool DoLogic(FileInfo file)
+        {
+            return (file.GetCategories().Contains("ab") && file.GetCategories().Contains("g"));
+        }
+
+        public string GetSubCategory()
+        {
+            return "ba" ;
         }
     }
-    public class ExeSubCategorizeContainsC : ContainsCLink
+    public class ExeSubCategorizeContainsC : ContainsCLink, ISubCategory
     {
-        public override void Categorize(FileInfo file)
+        public ExeSubCategorizeContainsC()
         {
-            if (ContainsC(file.getName()))
-            {
-                file.addSubCategory("c");
-            }
-            if (NextChain != null)
-                NextChain.Categorize(file);
+            Logic = this;
+            SubCategory = this;
+        }
+
+        public string GetSubCategory()
+        {
+            return "c";
         }
     }
-    public class ExeSubCategorizeContainsZ : CategorizingLogicLinks
+    public class ExeSubCategorizeContainsZ : SimpleLogicLink, ISubCategory
     {
-        public override void Categorize(FileInfo file)
+        public ExeSubCategorizeContainsZ()
         {
-            if (file.getCategories().Contains("g"))
-            {
-                if (ContainsZ(file.getName()))
-                {
-                    file.addSubCategory("z");
-                }
-            }
-            if (NextChain != null)
-                NextChain.Categorize(file);
+            Logic = this;
+            SubCategory = this;
         }
+
+        public override bool DoLogic(FileInfo file)
+        {
+            return (file.GetCategories().Contains("g")) && ContainsZ(file.GetName());
+        }
+
+        public string GetSubCategory()
+        {
+            return "z";
+        }    
     }
 }

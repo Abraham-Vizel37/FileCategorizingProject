@@ -6,64 +6,79 @@ using System.Threading.Tasks;
 
 namespace FileCategorizingProject
 {
-    public class DocCategorizeBFollowedByA : BFollowedByALink
+    public class DocCategorizeBFollowedByA : BFollowedByALink, ICategory
     {
-        public override void Categorize(FileInfo file)
+        public DocCategorizeBFollowedByA()
         {
-            if (BFollowedByA(file.getName()))
-            {
-                file.addCategory("cb");
-            }
-            if (NextChain != null)
-                NextChain.Categorize(file);
+            Logic = this;
+            Category = this;
+        }
+
+        public string GetCategory()
+        {
+            return "cb";
         }
     }
-    public class DocCategorizeContainsG : ContainsGLink
+    public class DocCategorizeContainsG : ContainsGLink, ICategory
     {
-        public override void Categorize(FileInfo file)
+        public DocCategorizeContainsG()
         {
-            if (ContainsG(file.getName()))
-            {
-                file.addCategory("g");
-            }
-            if (NextChain != null)
-                NextChain.Categorize(file);
+            Logic = this;
+            Category = this;
+        }
+
+        public string GetCategory()
+        {
+            return "g";
         }
     }
-    public class DocSubCategorizeGFollowedByB : GFollowedByBLink
+    public class DocSubCategorizeGFollowedByB : GFollowedByBLink, ISubCategory
     {
-        public override void Categorize(FileInfo file)
+        public DocSubCategorizeGFollowedByB()
         {
-            if (GFollowedByB(file.getName()))
-            {
-                file.addSubCategory("gb");
-            }
-            if (NextChain != null)
-                NextChain.Categorize(file);
+            Logic = this;
+            SubCategory = this;
+        }
+
+        public string GetSubCategory()
+        {
+            return "gb";
         }
     }
-    public class DocSubCategorizeContainsG: ContainsGLink
+    public class DocSubCategorizeContainsG : SimpleLogicLink, ISubCategory
     {
-        public override void Categorize(FileInfo file)
+        public DocSubCategorizeContainsG()
         {
-            if (ContainsG(file.getName()))
-            {
-                file.addSubCategory("g");
-            }
-            if (NextChain != null)
-                NextChain.Categorize(file);
+            Logic = this;
+            SubCategory = this;
+        }
+
+        public override bool DoLogic(FileInfo file)
+        {
+            return (file.GetCategories().Contains("g") && file.GetCategories().Contains("cb"));
+        }
+
+        public string GetSubCategory()
+        {
+            return "g";
         }
     }
-    public class DocSubCategorizeContainsZ : CategorizingLogicLinks
+    public class DocSubCategorizeContainsZ : SimpleLogicLink, ISubCategory
     {
-        public override void Categorize(FileInfo file)
+        public DocSubCategorizeContainsZ()
         {
-            if (ContainsZ(file.getName()))
-            {
-                file.addSubCategory("c");
-            }
-            if (NextChain != null)
-                NextChain.Categorize(file);
+            Logic = this;
+            SubCategory = this;
+        }
+
+        public override bool DoLogic(FileInfo file)
+        {
+            return ((file.GetCategories().Contains("cb") || (file.GetCategories().Contains("g")) && ContainsZ(file.GetName())));
+        }
+
+        public string GetSubCategory()
+        {
+            return "c";
         }
     }
 }

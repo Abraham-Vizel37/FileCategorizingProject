@@ -18,12 +18,13 @@ namespace FileCategorizingProject
                             in Directory.GetFiles(dir)
                             select Path.GetFileName(names);
 
-            FileInfoFactory factory = new FileInfoFactory();
+            FileInfoFactory fileInfoFactory = new FileInfoFactory();
 
             foreach (string fileName in fileNames)
             {
-                files.Add(factory.GetFileInfo(fileName));
+                files.Add(fileInfoFactory.GetFileInfo(fileName));
             }
+            
 
             foreach (FileInfo p in files)
             {

@@ -14,11 +14,12 @@ namespace FileCategorizingProject
         private List<IChainCategorization> _categoryLinks = new List<IChainCategorization> { };
         private List<IChainCategorization> _subCategoryLinks = new List<IChainCategorization> { };
 
-        public void ProcessFile(FileInfo file)
+        public FileInfo ProcessFile(FileInfo file)
         {
             _extension = file.GetExtension();
             SetCategoryChain();
             SetSubCategoryChain();
+            return file;
         }
 
         private void SetCategoryChain()

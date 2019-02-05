@@ -42,14 +42,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Logic\DocCategoryLogic.cs" />
-    <Compile Include="Logic\ExeCategoryLogic.cs" />
-    <Compile Include="Logic\FileInfoCategoryLogic.cs" />
-    <Compile Include="FileTypeCreation\FileInfoFactory.cs" />
-    <Compile Include="FileTypeCreation\FileInfo.cs" />
+    <Compile Include="FileInfoCreation\FileInfoBuilder.cs" />
+    <Compile Include="Logic\Criteria\DocCategoryLogic.cs" />
+    <Compile Include="Logic\Criteria\ExeCategoryLogic.cs" />
+    <Compile Include="Logic\CategorizingLogicLinks.cs" />
+    <Compile Include="FileInfoCreation\FileInfoFactory.cs" />
+    <Compile Include="FileInfoCreation\FileInfo.cs" />
     <Compile Include="Intefaces\ICategorize.cs" />
     <Compile Include="Logic\LogicChainFactory.cs" />
-    <Compile Include="Logic\PdfCategoryLogic.cs" />
+    <Compile Include="Logic\Criteria\PdfCategoryLogic.cs" />
+    <Compile Include="Logic\LogicLinks.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -24,7 +24,7 @@ namespace FileCategorizingProject
             _logicChainFactory = new LogicChainFactory();
             _logicChainFactory.ProcessFile(this);
             SetCategories();
-            SetSubCategories();            
+            SetSubCategories();
         }
 
         public string GetName()

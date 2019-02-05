@@ -11,19 +11,4 @@ namespace FileCategorizingProject
         void SetNextChain(IChainCategorization chain);
         void Categorize(FileInfo file);
     }
-
-    public interface ILogic
-    {
-        bool DoLogic(FileInfo file);
-    }
-
-    public interface ICategory
-    {
-        string GetCategory();
-    }
-
-    public interface ISubCategory
-    {
-        string GetSubCategory();
-    }
 }
